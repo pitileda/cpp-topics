@@ -1,9 +1,10 @@
 include(${CMAKE_SOURCE_DIR}/cmake/sources.cmake)
 
-# include_directories(${CMAKE_SOURCE_DIR}/destructor)
+include_directories(${CMAKE_SOURCE_DIR}/destructor/include)
 # include_directories(${googletest_SOURCE_DIR}/include)
 # set(SOURCES ${CMAKE_SOURCE_DIR}/destructor/destructor.cc)
-collect_sources(SOURCES ${CMAKE_SOURCE_DIR}/destructor/)
+FetchContent_MakeAvailable(googletest)
+collect_sources(SOURCES ${CMAKE_SOURCE_DIR}/destructor/ ${CMAKE_SOURCE_DIR}/destructor/include)
 set(LIBRARIES
     gtest gmock gtest_main)
 

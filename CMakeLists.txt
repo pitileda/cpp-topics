@@ -16,8 +16,6 @@ FetchContent_Declare(
     GIT_TAG release-1.12.1
 )
 
-FetchContent_MakeAvailable(googletest)
-
 add_subdirectory(./destructor)
 
 enable_testing()
