@@ -1,0 +1,45 @@
+@startuml
+
+skin rose
+
+title Relationships - Class Diagram
+
+
+note as Client
+  StateMachine sm;
+  App app1(sm); // here we are adding app1 to sm
+  App app2(sm); // here we are adding app2 to sm
+  Event e(Activate, app1);
+  sm.onEvent(e);
+  e = {Activate, app2};
+  sm.onEvent(e);
+end note
+
+class StateMachine {
+  +void onEvent()
+  +bool registerApp()
+  - list Apps
+}
+
+class Application {
+  +Int Windows
+  +void LockTheDoor()
+}
+
+class Event {
+  +Int Windows
+  +void LockTheDoor()
+}
+
+class Apartment
+class House
+class Commune
+class Window
+class Door
+
+Dwelling <|-down- Commune: Inheritance
+Dwelling <|-down- House: Inheritance
+StateMachine "1" *-left- "many" Application: Composition
+Dwelling "1" *-up- "many" Door: Composition
+
+@enduml

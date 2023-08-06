@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/ihor/projects/cpp-topics/FSM/build",
+  "command": "/usr/bin/clang++ -I/home/ihor/projects/cpp-topics/FSM/map -g -std=gnu++17 -o CMakeFiles/usingMap.dir/usingMap.cpp.o -c /home/ihor/projects/cpp-topics/FSM/usingMap.cpp",
+  "file": "/home/ihor/projects/cpp-topics/FSM/usingMap.cpp",
+  "output": "CMakeFiles/usingMap.dir/usingMap.cpp.o"
+},
+{
+  "directory": "/home/ihor/projects/cpp-topics/FSM/build",
+  "command": "/usr/bin/clang++ -I/home/ihor/projects/cpp-topics/FSM/switch -g -std=gnu++17 -o CMakeFiles/usingSwitch.dir/usingSwitch.cpp.o -c /home/ihor/projects/cpp-topics/FSM/usingSwitch.cpp",
+  "file": "/home/ihor/projects/cpp-topics/FSM/usingSwitch.cpp",
+  "output": "CMakeFiles/usingSwitch.dir/usingSwitch.cpp.o"
+}
+]

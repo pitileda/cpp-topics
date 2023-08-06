@@ -1,0 +1,6 @@
+# ninja log v5
+0	1	0	clean	a31eedcededa8236
+0	121	1687936019332188769	CMakeFiles/usingSwitch.dir/usingSwitch.cpp.o	7b7a638c5c1cdd78
+121	158	1687936019372188985	usingSwitch	6392cb7c2f8a6f37
+0	239	1687936019452189415	CMakeFiles/usingMap.dir/usingMap.cpp.o	b7222aed0209c7b8
+239	281	1687936019492189632	usingMap	55ac331e0d348ad9
