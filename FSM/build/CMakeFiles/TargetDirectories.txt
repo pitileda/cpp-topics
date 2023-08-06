@@ -1,0 +1,4 @@
+/home/ihor/projects/cpp-topics/FSM/build/CMakeFiles/usingMap.dir
+/home/ihor/projects/cpp-topics/FSM/build/CMakeFiles/usingSwitch.dir
+/home/ihor/projects/cpp-topics/FSM/build/CMakeFiles/edit_cache.dir
+/home/ihor/projects/cpp-topics/FSM/build/CMakeFiles/rebuild_cache.dir
