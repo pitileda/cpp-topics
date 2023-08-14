@@ -34,3 +34,5 @@
 # build dir
 build
 **build
+.vscode
+.cache
