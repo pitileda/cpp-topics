@@ -36,3 +36,7 @@ build
 **build
 .vscode
 .cache
+cmake_build*
+
+# clangd files
+compile_commands.json
