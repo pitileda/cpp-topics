@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.15)
+project(ranges)
+add_executable(${PROJECT_NAME}-sort main.cc)
+add_executable(${PROJECT_NAME}-sortWOComp withoutComparator.cc)
+target_compile_features(${PROJECT_NAME}-sort PRIVATE cxx_std_20)
+target_compile_features(${PROJECT_NAME}-sortWOComp PRIVATE cxx_std_20)
