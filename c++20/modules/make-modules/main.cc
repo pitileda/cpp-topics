@@ -1,5 +1,5 @@
-import <iostream>;
-import <vector>;
+import<iostream>;
+import<vector>;
 import Mathematics;
 
 int main() {
