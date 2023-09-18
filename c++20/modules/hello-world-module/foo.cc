@@ -6,7 +6,7 @@ module;
 export module foo;
 
 export class foo {
-public:
+ public:
   foo();
   ~foo();
   void helloworld();
