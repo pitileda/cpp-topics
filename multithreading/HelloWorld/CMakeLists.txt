@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.15)
+project(hello)
+find_package(Threads REQUIRED)
+add_executable(${PROJECT_NAME} main.cc)
+target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
