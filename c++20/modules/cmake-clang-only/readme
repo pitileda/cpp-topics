@@ -1,0 +1,11 @@
+Limitations:
+
+1. It only worked with ninja and while I don’t have anything against this build system it’s an extra hassle to get this additional dependency installed while make is usually available by default. This restriction also likely means that you cannot use such a CMake config with IDEs.
+
+2. Native CMake support only worked with clang 16 while the fmt module can be built manually with clang 15.
+
+3. It required the latest version of CMake and a lot of ceremony to set up, including some incomprehensible things like
+set(CMAKE_EXPERIMENTAL_CXX_MODULE_CMAKE_API
+    "2182bf5c-ef0d-489a-91da-49dbc3090d2a")
+    
+4. There were issues in dynamic dependency extraction both in clang-scan-deps and CMake itself.
