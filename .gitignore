@@ -40,3 +40,6 @@ cmake_build*
 
 # clangd files
 compile_commands.json
+
+# CMake user files
+CMakeLists.txt.user
