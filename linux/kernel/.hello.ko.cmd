@@ -1,1 +1,0 @@
-cmd_/home/ihor/projects/kernel/hello.ko := ld -r -m elf_x86_64 -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/ihor/projects/kernel/hello.ko /home/ihor/projects/kernel/hello.o /home/ihor/projects/kernel/hello.mod.o;  true
