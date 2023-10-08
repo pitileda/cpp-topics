@@ -1,0 +1,7 @@
+cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -G "Sublime Text 2 - Unix Makefiles"
+cmake --build build
+cd build
+./BarTest
+lcov --directory ./ --capture --output-file ./code_coverage.info -rc lcov_branch_coverage=1
+genhtml code_coverage.info --branch-coverage --output-directory ./code_coverage/
+
