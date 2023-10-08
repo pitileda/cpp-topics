@@ -11,7 +11,9 @@ int Bar::Do(int a) {
   return 200;
 }
 
+// LCOV_EXCL_START
 int Bar ::Oops(int b) {
   std::cout << "Foo::Oops " << b << std::endl;
   return 42;
 }
+// LCOV_EXCL_STOP
