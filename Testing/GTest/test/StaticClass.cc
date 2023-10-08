@@ -1,39 +1,34 @@
+#include <gtest/gtest.h>
+
 #include <cstdint>
+#include <iostream>
 
 #include "gmock/gmock.h"
-
-class Foo {
- public:
-  static void Do(int a) {
-    if (a > 0) {
-      return;
-    }
-    Oops(a);
-  }
-
- private:
-  static void Oops(int b) { std::cout << "Foo::Oops " << b << std::endl; }
-};
+#include "static_foo.h"
 
 class FooClone {
  public:
-  virtual void Do(int a) {
-    if (a > 0) {
-      return;
+  virtual int Do(int a) {
+    if (a == 0) {
+      return 12;
     }
-    Oops(a);
-  }
-  virtual void Oops(int b) {
-    std::cout << "FooHelper::Oops " << b << std::endl;
+    if (Oops(a) > 10) {
+      return 100;
+    }
+
+    return 200;
   }
 
  private:
-  static bool privateOopsCalled;
+  virtual int Oops(int b) {
+    std::cout << "FooHelper::Oops " << b << std::endl;
+    return 34;
+  }
 };
 
 class MockFooClone : public FooClone {
  public:
-  MOCK_METHOD(void, Oops, (int b));
+  MOCK_METHOD(int, Oops, (int b));
 };
 
 TEST(Test, HandleDoTest_Positive) {
@@ -41,7 +36,7 @@ TEST(Test, HandleDoTest_Positive) {
   MockFooClone mock;
 
   // Set expectations for the static methods
-  EXPECT_CALL(mock, Oops(theA)).Times(1);
+  EXPECT_CALL(mock, Oops(theA)).Times(0);
 
   // Call the static method through the helper class
   mock.Do(theA);
@@ -52,10 +47,22 @@ TEST(Test, HandleDoTest_Negative) {
   MockFooClone mock;
 
   // Set expectations for the static methods
-  EXPECT_CALL(mock, Oops(theA)).Times(0);
+  EXPECT_CALL(mock, Oops(theA)).Times(1);
 
   // Call the static method through the helper class
   mock.Do(theA);
+}
+
+TEST(Test, HandleDoTest_OopsReturns60) {
+  int theA = 1;
+  MockFooClone mock;
+
+  // Set expectations for the static methods
+  EXPECT_CALL(mock, Oops(theA)).WillOnce(testing::Return(60));
+
+  // Call the static method through the helper class
+  int res = mock.Do(theA);
+  EXPECT_EQ(res, 100);
 }
 
 int main(int argc, char** argv) {
