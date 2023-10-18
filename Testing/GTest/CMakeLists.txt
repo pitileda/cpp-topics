@@ -32,6 +32,7 @@ endif()
 add_executable(FifoTest test/TestFifo.cc)
 target_include_directories(FifoTest PRIVATE include)
 target_link_libraries(FifoTest GTest::gtest_main)
+target_compile_options(FifoTest PRIVATE -Wall -Werror)
 # Add the coverage flags to the main project executable as well
 if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
     target_compile_options(FifoTest PRIVATE --coverage)
