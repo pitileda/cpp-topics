@@ -43,3 +43,7 @@ compile_commands.json
 
 # CMake user files
 CMakeLists.txt.user
+
+# conan files
+CMakeUserPresets.json
+
