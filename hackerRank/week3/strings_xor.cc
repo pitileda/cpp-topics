@@ -1,0 +1,25 @@
+#include <algorithm>
+#include <cmath>
+#include <cstdio>
+#include <iostream>
+#include <vector>
+using namespace std;
+
+string strings_xor(string s, string t) {
+  string res = "";
+  for (int i = 0; i < s.size(); i++) {
+    if (s[i] != t[i])
+      res.append("1");
+    else
+      res.append("0");
+  }
+
+  return res;
+}
+
+int main() {
+  string s, t;
+  cin >> s >> t;
+  cout << strings_xor(s, t) << endl;
+  return 0;
+}
