@@ -1,8 +1,10 @@
+// https://www.vishalchovatiya.com/state-design-pattern-in-modern-cpp/
 #include <cstdint>
 #include <iostream>
 #include <memory>
 #include <ostream>
 #include <utility>
+/*------------------------------- Events ------------------------------------*/
 enum class Event { connect, connected, disconnect, timeout };
 
 inline std::ostream& operator<<(std::ostream& os, const Event& ev) {
@@ -23,6 +25,7 @@ inline std::ostream& operator<<(std::ostream& os, const Event& ev) {
   return os;
 }
 
+/*------------------------------- States ------------------------------------*/
 struct State {
   virtual std::unique_ptr<State> on_event(const Event& ev) = 0;
 };
@@ -41,8 +44,24 @@ struct Connected : public State {
   std::unique_ptr<State> on_event(const Event& ev);
 };
 
+inline std::ostream& operator<<(std::ostream& os, const State& state) {
+  os << "Idle";
+  return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Connecting& state) {
+  os << "Connecting";
+  return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Connected& state) {
+  os << "Connected";
+  return os;
+}
+
+/*------------------------------- Transitions -------------------------------*/
 std::unique_ptr<State> Idle::on_event(const Event& ev) {
-  std::cout << "Idle -> " << ev;
+  std::cout << "In \"Idle\" state received event: " << ev;
   if (ev == Event::connect) {
     return std::make_unique<Connecting>();
   }
@@ -50,7 +69,7 @@ std::unique_ptr<State> Idle::on_event(const Event& ev) {
 }
 
 std::unique_ptr<State> Connecting::on_event(const Event& ev) {
-  std::cout << "Connecting -> " << ev;
+  std::cout << "In \"Connecting\" state received event: " << ev;
   switch (ev) {
     case Event::connected:
       return std::make_unique<Connected>();
@@ -64,7 +83,7 @@ std::unique_ptr<State> Connecting::on_event(const Event& ev) {
 }
 
 std::unique_ptr<State> Connected::on_event(const Event& ev) {
-  std::cout << "Connected -> " << ev;
+  std::cout << "In \"Connected\" state received event: " << ev;
   if (ev == Event::disconnect) {
     return std::make_unique<Idle>();
   }
@@ -78,6 +97,7 @@ struct Bluetooth {
     if (new_state) {
       curr_state_ = std::move(new_state);
     }
+    std::cout << "BT state is: " << *curr_state_ << std::endl;
   }
   template <typename... Events>
   void send(Events... ev) {
@@ -87,6 +107,7 @@ struct Bluetooth {
 
 int main(int argc, char const* argv[]) {
   Bluetooth bl;
-  bl.send(Event::connect, Event::timeout, Event::connected, Event::disconnect);
+  bl.send(Event::timeout, Event::connect, Event::timeout, Event::connected,
+          Event::disconnect);
   return 0;
 }

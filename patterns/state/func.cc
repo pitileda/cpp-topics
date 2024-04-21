@@ -1,3 +1,4 @@
+// https://www.vishalchovatiya.com/state-design-pattern-in-modern-cpp/
 #include <cstdint>
 #include <cstdlib>
 #include <iostream>
@@ -26,10 +27,20 @@ struct Connecting {
   uint8_t retries_ = 0;
   static const uint8_t max_retries_ = 3;
 };
-
 struct Connected {};
 
 using State = std::variant<Idle, Connected, Connecting>;
+
+// https://stackoverflow.com/questions/62355613/stdvariant-cout-in-c
+struct StateCouter {
+  std::string operator()(const Idle& s) const { return std::string("Idle"); }
+  std::string operator()(const Connecting& s) const {
+    return std::string("Connecting");
+  }
+  std::string operator()(const Connected& s) const {
+    return std::string("Connected");
+  }
+};
 
 // Rules
 struct Rules {
@@ -72,6 +83,8 @@ struct Bluetooth {
     if (new_state) {
       curr_state_ = *std::move(new_state);
     }
+    std::cout << "BT state is: " << std::visit(StateCouter(), curr_state_)
+              << std::endl;
   }
 
   template <typename... Events>
@@ -82,7 +95,7 @@ struct Bluetooth {
 
 int main(int argc, char const* argv[]) {
   Bluetooth<State, Event, Rules> bl;
-  bl.send(EventConnect{"AA:BB:CC:DD:FF"}, EventTimeout(), EventConnected(),
-          EventDisconnect());
+  bl.send(EventTimeout(), EventConnect{"AA:BB:CC:DD:FF"}, EventTimeout(),
+          EventConnected(), EventTimeout(), EventDisconnect());
   return EXIT_SUCCESS;
 }
