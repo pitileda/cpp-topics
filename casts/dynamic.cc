@@ -1,3 +1,5 @@
+#include <exception>
+#include <functional>
 #include <iostream>
 #include <memory>
 
@@ -23,6 +25,7 @@ class Fake {
 class Interface {
  public:
   virtual void exec() = 0;
+  virtual ~Interface() {}
 };
 
 class Executor1 : public Interface {
@@ -42,6 +45,8 @@ class Executor2 : public Interface {
 // with help of dynamic_cast next fun can be one for
 // all derived types of Interface
 // to avoid this numeric if-conditions Visitor pattern can be used
+
+// Pointer version
 void execute(Interface* obj) {
   Executor1* ex1 = dynamic_cast<Executor1*>(obj);
   if (ex1) {
@@ -50,6 +55,25 @@ void execute(Interface* obj) {
   Executor2* ex2 = dynamic_cast<Executor2*>(obj);
   if (ex2) {
     ex2->extra();
+  }
+}
+
+// Reference version
+template <typename Interface>
+void executeRef(std::reference_wrapper<Interface> obj) {
+  Interface& base = obj.get();  // this is important to have base class
+  try {
+    Executor1& ex = dynamic_cast<Executor1&>(base);
+    ex.exec();
+  } catch (std::bad_cast& e) {
+    // ignore
+  }
+
+  try {
+    Executor2& ex = dynamic_cast<Executor2&>(base);
+    ex.exec();
+  } catch (std::bad_cast& e) {
+    // ignore
   }
 }
 
@@ -74,6 +98,12 @@ int main() {
 
   execute(ex1.get());
   execute(ex2.get());
+
+  Executor1 ex1_ref;
+  Executor2 ex2_ref;
+
+  executeRef(std::ref(ex1_ref));
+  executeRef(std::ref(ex2_ref));
 
   return 0;
 }
