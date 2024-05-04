@@ -19,7 +19,7 @@ using Buffer = std::vector<Chunk>;
 Buffer parseXML(std::string_view xml_data) {
   Buffer buffer;
   buffer.reserve(10);
-  size_t pos = xml_data.find_first_of('\n') + 1; // skip <data>
+  size_t pos = xml_data.find_first_of('\n') + 1;  // skip <data>
   size_t end_pos = xml_data.rfind("</data>");
   std::string field_name, field_type;
 
