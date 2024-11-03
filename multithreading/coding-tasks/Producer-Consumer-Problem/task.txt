@@ -1,0 +1,11 @@
+Task 1: Producer-Consumer Problem
+Objective: Implement a producer-consumer problem using multiple threads.
+
+1. Create a shared buffer (e.g., a queue) between producer and consumer threads.
+2. Use mutexes and condition variables to synchronize access to the buffer.
+3. The producer should add data to the buffer if it's not full, 
+   and the consumer should remove data from the buffer if it's not empty.
+4. Allow multiple producers and multiple consumers, 
+   and observe how the program performs with different numbers of threads.
+
+Key Concepts: Mutex, Condition Variables, Synchronization
