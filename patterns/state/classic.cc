@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 #include <ostream>
+#include <string>
 #include <utility>
 /*------------------------------- Events ------------------------------------*/
 enum class Event { connect, connected, disconnect, timeout };
@@ -28,34 +29,28 @@ inline std::ostream& operator<<(std::ostream& os, const Event& ev) {
 /*------------------------------- States ------------------------------------*/
 struct State {
   virtual std::unique_ptr<State> on_event(const Event& ev) = 0;
+  virtual std::string get_name() const { return std::string("DefaultState"); }
 };
 
 struct Idle : public State {
   std::unique_ptr<State> on_event(const Event& ev);
+  virtual std::string get_name() const { return std::string("Idle"); }
 };
 
 struct Connecting : public State {
   std::unique_ptr<State> on_event(const Event& ev);
   uint8_t retries_ = 0;
   uint8_t max_retries_ = 3;
+  virtual std::string get_name() const { return std::string("Connecting"); }
 };
 
 struct Connected : public State {
   std::unique_ptr<State> on_event(const Event& ev);
+  virtual std::string get_name() const { return std::string("Connected"); }
 };
 
 inline std::ostream& operator<<(std::ostream& os, const State& state) {
-  os << "Idle";
-  return os;
-}
-
-inline std::ostream& operator<<(std::ostream& os, const Connecting& state) {
-  os << "Connecting";
-  return os;
-}
-
-inline std::ostream& operator<<(std::ostream& os, const Connected& state) {
-  os << "Connected";
+  os << state.get_name();
   return os;
 }
 
@@ -100,14 +95,14 @@ struct Bluetooth {
     std::cout << "BT state is: " << *curr_state_ << std::endl;
   }
   template <typename... Events>
-  void send(Events... ev) {
+  void process(Events... ev) {
     (dispatch(ev), ...);
   }
 };
 
 int main(int argc, char const* argv[]) {
   Bluetooth bl;
-  bl.send(Event::timeout, Event::connect, Event::timeout, Event::connected,
-          Event::disconnect);
+  bl.process(Event::timeout, Event::connect, Event::timeout, Event::connected,
+             Event::disconnect);
   return 0;
 }
