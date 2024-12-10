@@ -8,43 +8,41 @@
 
 // using namespace std;
 
-//Empty class
-class EmptyClass{
+// Empty class
+class EmptyClass {};
 
-};
-
-//Empty class that contains only function
-class EmptyClassWithFunctions{
-public: 
-	virtual void display(){
-	}
+// Empty class that contains only function
+class EmptyClassWithFunctions {
+ public:
+  virtual void display() {}
 };
 
 struct Ihor : virtual public EmptyClassWithFunctions {
-	bool i;
-	bool y;
-	int x;
+  bool i;
+  bool y;
+  int x;
+  virtual void dosmth() {}
 };
 
 struct Lena : virtual public EmptyClassWithFunctions {
-	bool i;
-	bool y;
-	int x;
+  bool i;
+  bool y;
+  int x;
 };
 
 struct Polina : public Ihor, public Lena {
-	bool i;
-	bool y;
-	int x;
+  bool i;
+  bool y;
+  int x;
+  virtual void display() override { x = 1; }
 };
 
-int main(int argc, char const *argv[])
-{
-	// cout << sizeof(EmptyClassWithFunctions) ;
-	// cout << sizeof(EmptyClass) ;
-	// cout << sizeof(Ihor) ;
+int main(int argc, char const *argv[]) {
+  // cout << sizeof(EmptyClassWithFunctions) ;
+  // cout << sizeof(EmptyClass) ;
+  // cout << sizeof(Ihor) ;
 
-	// return sizeof(EmptyClassWithFunctions) ;
-	// return sizeof(Ihor);
-	return sizeof(Polina);
+  // return sizeof(EmptyClassWithFunctions) ;
+  // return sizeof(Ihor);
+  return sizeof(Polina);
 }
