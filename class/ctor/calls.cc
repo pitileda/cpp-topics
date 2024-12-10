@@ -15,6 +15,17 @@ class T {
     s = std::move(other.s);
     std::cout << "T(&&)\n";
   }
+  T& operator=(const T&) {
+    std::cout << "assignment called\n";
+    return *this;
+  }
+
+  T& operator=(const T&& rhs) {
+    std::cout << "move called\n";
+    s = std::move(rhs.s);
+    return *this;
+  }
+
   std::string get() const { return s; }
 };
 
@@ -38,5 +49,8 @@ int main(int argc, char const* argv[]) {
   foo(t);              // called T(&)
   foo(T());            // T(), called T(&&)
   foo(std::move(t2));  // called T(&&)
+  T t3;                // T()
+  t3 = t2;             // assignment called
+  t3 = std::move(t2);  // move called
   return 0;
 }
