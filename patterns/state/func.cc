@@ -68,7 +68,7 @@ struct Rules {
 
   template <typename State_t, typename Event_t>
   std::optional<State> operator()(State_t& s, const Event_t& e) {
-    std::cout << "Unknown" << typeid(s).name() << std::endl;
+    std::cout << "Ignoring event" << typeid(e).name() << std::endl;
     return std::nullopt;
   }
 };
@@ -88,14 +88,18 @@ struct Bluetooth {
   }
 
   template <typename... Events>
-  void send(const Events&... ev) {
+  void process(const Events&... ev) {
+    std::cout << "New event comes\n";
     (dispatch(ev), ...);
+    std::cout << "New event comes\n";
   }
+  explicit Bluetooth(StateVariant state) : curr_state_(state) {}
 };
 
 int main(int argc, char const* argv[]) {
-  Bluetooth<State, Event, Rules> bl;
-  bl.send(EventTimeout(), EventConnect{"AA:BB:CC:DD:FF"}, EventTimeout(),
-          EventConnected(), EventTimeout(), EventDisconnect());
+  Bluetooth<State, Event, Rules> bl{Idle{}};
+  bl.process(EventTimeout(), EventConnect{"AA:BB:CC:DD:FF"}, EventTimeout(),
+             EventTimeout(), EventTimeout(), EventConnected(), EventTimeout(),
+             EventDisconnect());
   return EXIT_SUCCESS;
 }
