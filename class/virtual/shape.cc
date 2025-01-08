@@ -3,7 +3,7 @@
 #include <vector>
 class Shape {
  public:
-  virtual int getArea() = 0;
+  virtual int getArea() const = 0;
   virtual ~Shape(){};
 };
 
@@ -16,7 +16,7 @@ class Rectagle : public Shape {
 
  public:
   explicit Rectagle(width w, height h) : w(w), h(h) {}
-  int getArea() override {
+  int getArea() const override {
     std::cout << "Rec\n";
     return w * h;
   }
@@ -28,7 +28,7 @@ class Circle : public Shape {
 
  public:
   explicit Circle(int radius) : radius(radius) {}
-  int getArea() override {
+  int getArea() const override {
     std::cout << "Cir\n";
     return 3.14 * radius * radius;
   }
