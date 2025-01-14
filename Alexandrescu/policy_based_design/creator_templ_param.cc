@@ -109,6 +109,10 @@ int main(int argc, char const* argv[]) {
   wm.add();
   wm.add();
   wm.add();
+
+  // use only specific methods of PrototypeCreator
+  // except common create() for all Creators
+  wm.set(new Widget);
   wm.print();
 
   return 0;
