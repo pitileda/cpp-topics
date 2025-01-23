@@ -1,0 +1,44 @@
+10941* /usr/bin/cmake  -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS=clang \\n      -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind" \\n      -DLIBCXX_ENABLE_MODULES=ON \\n      -DCMAKE_BUILD_TYPE=Release \\n      -DLIBCXX_ENABLE_EXPERIMENTAL_LIBRARY=ON \\n      -DLIBCXX_ENABLE_MODULES=ON \\n      -DLIBCXX_TEST_STD_MODULES=ON \\n      ../llvm\n
+10942* make -j14
+10943* cd ../red_belt
+10944* nvim
+10945* find . -name "std.cppm"
+10946* sudo make install
+10947* find . -name "std.cppm"
+10948* clang++ -std=c++20 -stdlib=libc++ -isystem /home/oem/tmp/llvm-project/build/include/c++/v1 \\n  -Wno-reserved-identifier -Wno-reserved-module-identifier \\n  --precompile -o std.pcm ./modules/c++/v1/std.cppm\n
+10949* bin
+10950* cd ..
+10951* ./bin/clang++ -std=c++20 -stdlib=libc++ -isystem /home/oem/tmp/llvm-project/build/include/c++/v1 \\n  -Wno-reserved-identifier -Wno-reserved-module-identifier \\n  --precompile -o std.pcm ./modules/c++/v1/std.cppm\n
+10952* ll
+10953* ./bin/clang++ -std=c++23 -stdlib=libc++ -isystem /home/oem/tmp/llvm-project/build/include/c++/v1 \\n  -Wno-reserved-identifier -Wno-reserved-module-identifier \\n  --precompile -o std.pcm ./modules/c++/v1/std.cppm\n
+10954* ll
+10955* ./bin/clang++ -std=c++23 -stdlib=libc++ -fmodule-file=std=std.pcm -o ~/projects/cpp-topics/c++23/hello_cpp23.cc
+10956* ./bin/clang++ -std=c++23 -stdlib=libc++ -fmodule-file=std=std.pcm ~/projects/cpp-topics/c++23/hello_cpp23.cc
+10957* ll
+10958* ./a.out
+10959* clang++ -std=c++23 -stdlib=libc++ -fmodule-file=std=std.pcm ~/projects/cpp-topics/c++23/hello_cpp23.cc
+10960* ./bin/clang++ -std=c++23 -stdlib=libc++ -fmodule-file=std=std.pcm ~/projects/cpp-topics/c++23/hello_cpp23.cc
+10961* ./bin/clang++ -std=c++23 -stdlib=libc++ -fmodule-file=std=std.pcm ~/projects/cpp-topics/c++23/hello_cpp23.cc -o hello
+10962* ./hello
+10963* cat ~/projects/cpp-topics/c++23/hello_cpp23.cc
+10964* mkdir build
+10965* cd build
+10966* cmake ../ -DCMAKE_EXPORT_COMPILE_COMMANDS=1
+10967* cmake --version
+10968* cmake ../ -DCMAKE_EXPORT_COMPILE_COMMANDS=1
+10969* ll
+10970* cp compile_commands.json ../
+10971* make
+10972* ll
+10973* cmake ../ -DCMAKE_EXPORT_COMPILE_COMMANDS=1
+10974* cat compile_commands.json
+10975* cp compile_commands.json ..
+10976* ll ~/tmp/llvm-project/build
+10977* ll ~/tmp/llvm-project/build/std.pcm
+10978* rm -rf ./*
+10979* cmake ../ -DCMAKE_EXPORT_COMPILE_COMMANDS=1
+10980* cp compile_commands.json ..
+10981* /usr/bin/cmake  -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra" \\n      -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind" \\n      -DLIBCXX_ENABLE_MODULES=ON \\n      -DCMAKE_BUILD_TYPE=Release \\n      -DLIBCXX_ENABLE_EXPERIMENTAL_LIBRARY=ON \\n      -DLIBCXX_ENABLE_MODULES=ON \\n      -DLIBCXX_TEST_STD_MODULES=ON \\n      ../llvm\n
+10982* make -j14
+10983* ll bin
+10984* pwd
