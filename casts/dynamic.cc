@@ -1,4 +1,3 @@
-#include <exception>
 #include <functional>
 #include <iostream>
 #include <memory>
@@ -8,11 +7,13 @@
 class Base {
  public:
   virtual void foo() { std::cout << "Foo"; }
+  virtual ~Base() = default;
 };
 
 class Derived : public Base {
  public:
   void bar() { std::cout << "BAR\n"; }
+  ~Derived() override = default;
 };
 
 class Fake {
@@ -53,6 +54,18 @@ void execute(Interface* obj) {
     ex1->exec();
   }
   Executor2* ex2 = dynamic_cast<Executor2*>(obj);
+  if (ex2) {
+    ex2->extra();
+  }
+}
+
+// Smart Pointer version requires dynamic_pointer_cast
+void execute(const std::shared_ptr<Interface>& obj) {
+  std::shared_ptr<Executor1> ex1 = std::dynamic_pointer_cast<Executor1>(obj);
+  if (ex1) {
+    ex1->exec();
+  }
+  std::shared_ptr<Executor2> ex2 = std::dynamic_pointer_cast<Executor2>(obj);
   if (ex2) {
     ex2->extra();
   }
@@ -104,6 +117,9 @@ int main() {
 
   executeRef(std::ref(ex1_ref));
   executeRef(std::ref(ex2_ref));
+
+  execute(std::make_shared<Executor1>());
+  execute(std::make_shared<Executor2>());
 
   return 0;
 }
