@@ -1,4 +1,5 @@
 #include <iostream>
+#include <optional>
 #include <utility>
 #include <variant>
 #include <vector>
@@ -15,7 +16,7 @@ auto product(Args... args) {
 }
 
 template <typename First, typename... Rest>
-double divide(First first, Rest... rest) {
+std::optional<double> divide(First first, Rest... rest) {
   bool isZero = false;
 
   double result = first;
@@ -30,9 +31,9 @@ double divide(First first, Rest... rest) {
 
   (step(rest), ...);
   if (isZero) {
-    return 0;
+    return std::nullopt;
   }
-  return result;
+  return std::optional<double>(result);
 }
 
 // with cout and forwarding references
@@ -62,7 +63,11 @@ int main() {
   fillVec(cv, 'c', 'b', 'f', 'g');
   _printf(cv[0], cv[1], cv[2], cv[3]);
   _printfs(product(1, 3, 5, 8), product(1, 3, 0), product(1, 2, 3, 4));
-  _printfs(divide(22, 10, 2.0));
-  _printfs(divide(10));
+  _printfs(divide(22, 10, 2.0).value());
+  _printfs(divide(10).value());
+  auto result = divide(12, 6, 0, 8);
+  if (result == std::nullopt) {
+    std::cout << "division by zero\n";
+  }
   return sum(1, 2, 4, 5);
 }
