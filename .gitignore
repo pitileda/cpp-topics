@@ -47,3 +47,5 @@ CMakeLists.txt.user
 # conan files
 CMakeUserPresets.json
 
+# clion
+.idea
