@@ -21,3 +21,9 @@ target_compile_features(expected PRIVATE cxx_std_23)
 
 add_executable(print print.cc)
 target_compile_features(print PRIVATE cxx_std_23)
+
+add_executable(generator generator.cc)
+target_compile_features(generator PRIVATE cxx_std_23)
+
+add_executable(flat_associative_containers flat_associative_containers.cc)
+target_compile_features(flat_associative_containers PRIVATE cxx_std_23)
