@@ -85,7 +85,9 @@ class Widget {
 class Gadget {
  public:
   Gadget() = default;
-  Gadget(const Widget& other) { std::cout << "Gadget was copied\n"; }
+  Gadget(const Widget& other) {
+    std::cout << "Gadget " << other << " was copied\n";
+  }
 
   Gadget* clone() { return new Gadget(*this); }
 };
@@ -121,7 +123,7 @@ class WidgetManager : public Creator<Widget> {
   using Creator<Widget>::set;
 };
 
-int main(int argc, char const* argv[]) {
+int main() {
   // auto widget = new Widget;
   // PrototypeCreator<Widget> creator(widget);
   // Widget* newWidget = creator.create();

@@ -4,12 +4,12 @@
 
 class Interface {
  public:
-  virtual bool fun() = 0;
+  virtual int fun() = 0;
 };
 
 class My {
  public:
-  int make_happy(const int& points) { return points; }
+  double make_happy(const double& points) { return points; }
 };
 
 template <typename ObjectType, typename ArgType>
@@ -17,7 +17,7 @@ Interface* ToInterface(const ObjectType& obj, const ArgType& arg) {
   class Local : public Interface {
    public:
     Local(const ObjectType& obj, const ArgType& arg) : obj_(obj), arg_(arg) {}
-    virtual bool fun() { return static_cast<bool>(obj_.make_happy(arg_)); }
+    virtual int fun() { return static_cast<int>(obj_.make_happy(arg_)); }
 
    private:
     ObjectType obj_;
@@ -28,6 +28,6 @@ Interface* ToInterface(const ObjectType& obj, const ArgType& arg) {
 
 int main() {
   My my_object;
-  Interface* interface_my_object = ToInterface(my_object, 1);
+  Interface* interface_my_object = ToInterface(my_object, 126.82);
   return interface_my_object->fun();
 }
