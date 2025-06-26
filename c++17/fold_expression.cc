@@ -1,38 +1,68 @@
 #include <iostream>
+#include <utility>
+#include <variant>
 #include <vector>
 
 // simple usage
-template <typename ...Argc>
-auto sum(Argc ...argc){
-	return (argc + ... + 0);
+template <typename... Args>
+auto sum(Args... args) {
+  return (args + ... + 0);
+}
+
+template <typename... Args>
+auto product(Args... args) {
+  return (args * ... * 1);
+}
+
+template <typename First, typename... Rest>
+double divide(First first, Rest... rest) {
+  bool isZero = false;
+
+  double result = first;
+
+  auto step = [&](auto x) {
+    if (static_cast<double>(x) == 0.0) {
+      isZero = true;
+      return;
+    }
+    result /= x;
+  };
+
+  (step(rest), ...);
+  if (isZero) {
+    return 0;
+  }
+  return result;
 }
 
 // with cout and forwarding references
-template<typename ...Argc>
-void printf(Argc&& ...argc){
-	(std::cout << ...  << std::forward<Argc>(argc)) << '\n';
+template <typename... Args>
+void _printf(Args&&... args) {
+  (std::cout << ... << std::forward<Args>(args)) << '\n';
 }
 
 // using comma operator
-template<typename T, typename ...Argc>
-void fillVec(std::vector<T>& v, Argc&& ...argc){
-	(v.push_back(argc), ...);
+template <typename T, typename... Args>
+void fillVec(std::vector<T>& v, Args&&... args) {
+  (v.push_back(args), ...);
 }
 
 // with cout and comma operator to have spaces
-template<typename ...Argc>
-void printfs(Argc&& ...argc){
-	const char sep = ' ';
-	((std::cout << std::forward<Argc>(argc) << sep), ...);
-	std::cout << std::endl;
+template <typename... Args>
+void _printfs(Args&&... args) {
+  const char sep = ' ';
+  ((std::cout << std::forward<Args>(args) << sep), ...);
+  std::cout << std::endl;
 }
 
-int main(int argc, char const *argv[])
-{
-	printf(12, 'c', 12.4);
-	printfs(12, 'c', 12.4);
-	std::vector<char> cv;
-	fillVec(cv, 'c', 'b', 'f', 'g');
-	printf(cv[0], cv[1], cv[2], cv[3]);
-	return sum(1,2,4,5);
+int main() {
+  _printf(12, 'c', 12.4);
+  _printfs(12, 'c', 12.4);
+  std::vector<char> cv;
+  fillVec(cv, 'c', 'b', 'f', 'g');
+  _printf(cv[0], cv[1], cv[2], cv[3]);
+  _printfs(product(1, 3, 5, 8), product(1, 3, 0), product(1, 2, 3, 4));
+  _printfs(divide(22, 10, 2.0));
+  _printfs(divide(10));
+  return sum(1, 2, 4, 5);
 }
