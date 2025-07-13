@@ -16,6 +16,8 @@ class WeatherServiceTest : public testing::Test {
       std::make_shared<MockWeatherApiClient>();
   std::shared_ptr<MockLogger> logger = std::make_shared<MockLogger>();
   WeatherService service{api, logger};
+
+  void SetUp() override { EXPECT_CALL(*logger, log).WillRepeatedly(Return()); }
 };
 
 class WeatherServiceTestParam
