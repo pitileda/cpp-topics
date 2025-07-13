@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <iostream>
 #include <set>
 #include <string>
@@ -57,9 +58,7 @@ class Solution {
     return string(1, s[0]);
   }
 
-  void reset() {
-    palindroms.clear();
-  }
+  void reset() { palindroms.clear(); }
 };
 
 int main() {
@@ -113,6 +112,7 @@ int main() {
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") << " --> " << endl;
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+       << " --> " << endl;
   return 0;
 }
