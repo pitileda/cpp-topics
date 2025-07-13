@@ -49,8 +49,8 @@ State B(Context& ctx, Event evt) {
   }
 }
 
-int main(int argc, char const* argv[]) {
-  State state = A;
+int main() {
+  State state = B;
   Context ctx{};
   Event events[] = {Event::B, Event::A, Event::B, Event::A};
 
