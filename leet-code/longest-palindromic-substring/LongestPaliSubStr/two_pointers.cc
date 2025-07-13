@@ -6,33 +6,36 @@
 using namespace std;
 
 class Solution {
- public:
+public:
   string longestPalindrome(string s) {
-    if (s.size() < 2) return s;
-    if (s.size() == 2) {
-      return s[0] == s[1] ? s : string(1, s[0]);
+    if (s.empty()) {
+      return "";
     }
-    string max_str;
-    int left = -1, right = 1, i = 0;
-    string curr_str;
-    for (; i < s.size(); ++i, ++left, ++right) {
-      if (left == -1 || right == s.size()) continue;
-      curr_str += s[i];
-      bool start{true};
-      for (int ll = left, rr = right; ll >= 0 && rr < s.size(); --ll, ++rr) {
-        if (s[ll] == s[rr]) {
-          curr_str.insert(curr_str.begin(), s[ll]);
-          curr_str.push_back(s[rr]);
-        } else if (start && s[i] == s[rr]) {
-          curr_str += s[rr];
-          ll++;
-        }
-        curr_str.size() > max_str.size() ? max_str = curr_str : (max_str);
-        start = false;
+
+    int start = 0;
+    int end = 0;
+
+    for (int i = 0; i < s.length(); i++) {
+      int odd = expandAroundCenter(s, i, i);
+      int even = expandAroundCenter(s, i, i + 1);
+      int max_len = max(odd, even);
+
+      if (max_len > end - start) {
+        start = i - (max_len - 1) / 2;
+        end = i + max_len / 2;
       }
-      curr_str = "";
     }
-    return max_str;
+
+    return s.substr(start, end - start + 1);
+  }
+
+private:
+  int expandAroundCenter(string s, int left, int right) {
+    while (left >= 0 && right < s.length() && s[left] == s[right]) {
+      left--;
+      right++;
+    }
+    return right - left - 1;
   }
 };
 
@@ -50,5 +53,6 @@ int main() {
   testPalindrome("cbbd", "bb");
   testPalindrome("ac", "a");
   testPalindrome("ccd", "cc");
+  testPalindrome("aaaa", "aaaa");
   return 0;
 }
